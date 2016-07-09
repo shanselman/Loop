@@ -835,6 +835,7 @@
 					43776F8B1B8022E90074EA36 = {
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0800;
+						DevelopmentTeam = 57NRR26737;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -853,6 +854,7 @@
 					43A943711B926B7B0051FA24 = {
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0800;
+						DevelopmentTeam = 57NRR26737;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
@@ -862,6 +864,7 @@
 					43A9437D1B926B7B0051FA24 = {
 						CreatedOnToolsVersion = 7.0;
 						LastSwiftMigration = 0800;
+						DevelopmentTeam = 57NRR26737;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 0;
