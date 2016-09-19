@@ -485,6 +485,12 @@ final class DeviceDataManager: CarbStoreDelegate, DoseStoreDelegate, Transmitter
         }
     }
 
+    func transmitter(_ transmitter: Transmitter, didReadUnknownData data: Data) {
+        logger.addMessage([
+            "unknownData": data.hexadecimalString
+        ], toCollection: "g5")
+    }
+
     // MARK: G5 data
 
     private var latestGlucoseG5: xDripG5.Glucose?
