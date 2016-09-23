@@ -624,7 +624,7 @@ final class StatusTableViewController: UITableViewController, UIGestureRecognize
         if let bolusViewController = segue.source as? BolusViewController {
             if let bolus = bolusViewController.bolus, bolus > 0 {
                 let startDate = Date()
-                dataManager.enactBolus(bolus) { (error) in
+                dataManager.enactBolus(units: bolus) { (error) in
                     if error != nil {
                         NotificationManager.sendBolusFailureNotificationForAmount(bolus, atStartDate: startDate)
                     }
@@ -692,7 +692,7 @@ final class StatusTableViewController: UITableViewController, UIGestureRecognize
 
     @objc private func openCGMApp(_: Any) {
         if let url = cgmAppURL {
-            UIApplication.shared.openURL(url)
+            UIApplication.shared.open(url)
         }
     }
 
