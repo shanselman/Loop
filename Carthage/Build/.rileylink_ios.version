@@ -1,0 +1,30 @@
+{
+  "iOS" : [
+    {
+      "hash" : "9d97688f169b331ae19bba15fd17d9a79c99c54c783a85013d7f3f5a9e158366",
+      "name" : "RileyLinkBLEKit"
+    },
+    {
+      "hash" : "e2c80229794ea573fdffd0801aedc0129c931b5b416c6f65af63bd076b871c30",
+      "name" : "NightscoutUploadKit"
+    },
+    {
+      "hash" : "99e9ae36e543d2f09cdd9afbf93d2217d19c62809ed802a593ab3328134c1405",
+      "name" : "RileyLinkKit"
+    },
+    {
+      "hash" : "f7eb5e6e87317c07a66762e5b49cb7180632c7cf51e0d532a58aeaac2d5c806e",
+      "name" : "MinimedKit"
+    }
+  ],
+  "commitish" : "v1.2.0",
+  "watchOS" : [
+
+  ],
+  "tvOS" : [
+
+  ],
+  "Mac" : [
+
+  ]
+}

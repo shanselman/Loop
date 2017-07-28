@@ -11,30 +11,22 @@ import MinimedKit
 
 
 // Bridges support for MinimedKit data types
-extension DoseStore {
+extension LoopDataManager {
     /**
      Adds and persists new pump events.
      */
-    func add(_ pumpEvents: [TimestampedHistoryEvent], completionHandler: @escaping (_ error: DoseStore.DoseStoreError?) -> Void) {
+    func addPumpEvents(_ pumpEvents: [TimestampedHistoryEvent], completion: @escaping (_ error: DoseStore.DoseStoreError?) -> Void) {
         var events: [NewPumpEvent] = []
         var lastTempBasalAmount: DoseEntry?
         var title: String
 
         for event in pumpEvents {
             var dose: DoseEntry?
+            var eventType: InsulinKit.PumpEventType?
 
             switch event.pumpEvent {
             case let bolus as BolusNormalPumpEvent:
-                let unit: DoseUnit
-
-                switch bolus.type {
-                case .Normal:
-                    unit = .units
-                case .Square:
-                    unit = .unitsPerHour
-                }
-
-                dose = DoseEntry(type: .bolus, startDate: event.date, endDate: event.date.addingTimeInterval(bolus.duration), value: bolus.amount, unit: unit)
+                dose = DoseEntry(type: .bolus, startDate: event.date, endDate: event.date.addingTimeInterval(bolus.duration), value: bolus.amount, unit: .units)
             case is SuspendPumpEvent:
                 dose = DoseEntry(suspendDate: event.date)
             case is ResumePumpEvent:
@@ -49,18 +41,24 @@ extension DoseStore {
                         type: .tempBasal,
                         startDate: event.date,
                         endDate: event.date.addingTimeInterval(TimeInterval(minutes: Double(temp.duration))),
-                        value: amount.value,
-                        unit: amount.unit
+                        value: amount.unitsPerHour,
+                        unit: .unitsPerHour
                     )
                 }
+            case is BasalProfileStartPumpEvent:
+                break
+            case is RewindPumpEvent:
+                break
+            case is PrimePumpEvent:
+                eventType = .prime
             default:
                 break
             }
 
             title = String(describing: event.pumpEvent)
-            events.append(NewPumpEvent(date: event.date, dose: dose, isMutable: event.isMutable(), raw: event.pumpEvent.rawData, title: title))
+            events.append(NewPumpEvent(date: event.date, dose: dose, isMutable: event.isMutable(), raw: event.pumpEvent.rawData, title: title, type: eventType))
         }
 
-        addPumpEvents(events, completionHandler: completionHandler)
+        addPumpEvents(events, completion: completion)
     }
 }

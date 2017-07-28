@@ -26,7 +26,7 @@ final class AnalyticsManager {
         }
     }
 
-    static let sharedManager = AnalyticsManager()
+    static let shared = AnalyticsManager()
 
     // MARK: - Helpers
 
@@ -99,18 +99,26 @@ final class AnalyticsManager {
         logEvent("Glucose target range change")
     }
 
-    func didChangeMaximumBasalRate() {
-        logEvent("Maximum basal rate change")
-    }
+    func didChangeLoopSettings(from oldValue: LoopSettings, to newValue: LoopSettings) {
+        logEvent("Loop settings change")
 
-    func didChangeMaximumBolus() {
-        logEvent("Maximum bolus change")
+        if newValue.maximumBasalRatePerHour != oldValue.maximumBasalRatePerHour {
+            logEvent("Maximum basal rate change")
+        }
+
+        if newValue.maximumBolus != oldValue.maximumBolus {
+            logEvent("Maximum bolus change")
+        }
+
+        if newValue.minimumBGGuard != oldValue.minimumBGGuard {
+            logEvent("Minimum BG Guard change")
+        }
     }
 
     // MARK: - Loop Events
 
     func didAddCarbsFromWatch(_ carbs: Double) {
-        logEvent("Carb entry created", withProperties: ["source" : "Watch", "value": carbs], outOfSession: true)
+        logEvent("Carb entry created", withProperties: ["source" : "Watch"], outOfSession: true)
     }
 
     func didRetryBolus() {
@@ -118,7 +126,7 @@ final class AnalyticsManager {
     }
 
     func didSetBolusFromWatch(_ units: Double) {
-        logEvent("Bolus set", withProperties: ["source" : "Watch", "value": units], outOfSession: true)
+        logEvent("Bolus set", withProperties: ["source" : "Watch"], outOfSession: true)
     }
 
     func loopDidSucceed() {
