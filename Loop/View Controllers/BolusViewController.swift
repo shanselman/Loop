@@ -192,7 +192,9 @@ final class BolusViewController: UITableViewController, IdentifiableClass, UITex
                                    localizedReason: String(format: NSLocalizedString("Authenticate to Bolus %@ Units", comment: "The message displayed during a device authentication prompt for bolus specification"), amountString),
                                    reply: { (success, error) in
                 if success {
-                    self.setBolusAndClose(bolus)
+                    DispatchQueue.main.async {
+                        self.setBolusAndClose(bolus)
+                    }
                 }
             })
         } else {
@@ -237,13 +239,11 @@ final class BolusViewController: UITableViewController, IdentifiableClass, UITex
 
     private func updateNotice() {
         if let notice = bolusRecommendation?.notice {
-            noticeLabel?.text = "⚠ " + String(describing: notice)
+            noticeLabel?.text = "⚠ \(notice.description(using: glucoseUnit))"
         } else {
             noticeLabel?.text = nil
         }
     }
-
-
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
